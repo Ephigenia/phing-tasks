@@ -8,11 +8,11 @@
 	</target>
 	
 	<target name="deploy-ftp">
-		<property name="ftp.port" value="21" />
-		<property name="ftp.dir" value="/" />
-		<fail unless="ftp.host" message="ftp.host missing" />
-		<fail unless="ftp.user" message="ftp.user missing" />
-		<fail unless="ftp.pass" message="ftp.pass missing" />
+		<property name="ftp.port" value="${deploy.${environment}.ftp.port}" />
+		<property name="ftp.dir" value="${deploy.${environment}.ftp.dir}" />
+		<property name="ftp.host" value="${deploy.${environment}.ftp.host}" />
+		<property name="ftp.user" value="${deploy.${environment}.ftp.user}" />
+		<property name="ftp.pass" value="${deploy.${environment}.ftp.pass}" />
 		<echo msg="FTP Deploy" />
 		<echo msg="----------" />
 		<echo msg="From:    ${deploy.fileset.refid}" />
@@ -24,7 +24,6 @@
 			level="verbose">
 			<fileset refid="${deploy.fileset.refid}" />
 		</ftpdeploy>
-		<echo msg="done" />
 	</target>
 	
 	<target name="deploy-rsync">
