@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="application" default="default" basedir="." phingVersion="2.4.2">
-	<property name="build.task.dir" value="${project.basedir}/task" />
-	<property name="build.environment.dir" value="${project.basedir}/environment" />
+<project name="application" default="" basedir="." phingVersion="2.4.2">
+	<property file="build.properties" />
 	<tstamp>
 		<format property="date" pattern="%Y%m%d" />
 		<format property="datetime" pattern="%Y%m%d-%H%M" />
 	</tstamp>
-	<property file="build.properties" />
-	<echo msg="${assets.js.files}" />
+	<property name="build.task.dir" value="${project.basedir}/task" />
+	<property name="build.environment.dir" value="${project.basedir}/environment" />
 	<!-- list of tasks included -->
 	<import file="${build.task.dir}/config.xml" optional="true" />
 	<import file="${build.task.dir}/deploy.xml" optional="true" />
@@ -16,7 +15,5 @@
 	<import file="${build.task.dir}/javascript.xml" optional="true" />
 	<import file="${build.task.dir}/release.xml" optional="true" />
 	<import file="${build.task.dir}/version.xml" optional="true" />
-	<!-- default target -->
-	<target name="default" depends="assets"></target>
 	<target name="cleanup" depends="install-cleanup" />
 </project>
