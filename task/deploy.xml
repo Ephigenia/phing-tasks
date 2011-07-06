@@ -45,7 +45,12 @@
 			</then>
 		</if>
 		<property name="sync.command" value="rsync -${sync.options} --progress --cvs-exclude ${sync.extra} ${sync.source} -e ssh ${sync.target}" />
-		<echo msg="${sync.command}" />
+		<exec
+			escape="false"
+			checkreturn="true"
+			passthru="true"
+			command="${sync.command}"
+		/>
 	</target>
 	
 	<target name="deploy" description="deploy everything to live server">
