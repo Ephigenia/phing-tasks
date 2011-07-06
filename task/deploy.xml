@@ -1,6 +1,5 @@
 <project>
 	<property name="sync.options" value="avzcu" />
-	<property name="sync.source" value="${project.basedir}/" />
 	
 	<target name="deploy-list" description="list files that would be deployed">
 		<phingcall target="deploy">
@@ -33,6 +32,7 @@
 		<property name="sync.target" value="${deploy.${environment}.rsync.target}" />
 		<property name="sync.source" value="${deploy.${environment}.rsync.source}" />
 		<property name="sync.extra" value="${deploy.${environment}.rsync.extra}" />
+		<echo msg="${deploy.live.rsync.source} ${sync.source}" />
 		<!-- confirm when not in list mode -->
 		<if>
 			<not><contains string="${sync.options}" substring="n" /></not>
@@ -45,12 +45,7 @@
 			</then>
 		</if>
 		<property name="sync.command" value="rsync -${sync.options} --progress --cvs-exclude ${sync.extra} ${sync.source} -e ssh ${sync.target}" />
-		<exec
-			escape="false"
-			checkreturn="true"
-			passthru="true"
-			command="${sync.command}"
-		/>
+		<echo msg="${sync.command}" />
 	</target>
 	
 	<target name="deploy" description="deploy everything to live server">
