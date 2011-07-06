@@ -7,8 +7,6 @@
 		<mkdir dir="bin" />
 		<mkdir dir="tmp/install" />
 	</target>
-	
-	<!-- instal stuff -->
 	<target name="install-closure-compiler" depends="install-prepare">
 		<fail unless="assets.closure.compiler" message="assets.closure.compiler location not set in build.properties." />
 		<echo msg="downloading closure compiler from google code" />
@@ -21,27 +19,22 @@
 		<move file="tmp/install/compiler.jar" tofile="${assets.closure.compiler}" overwrite="true" />
 		<phingcall target="install-cleanup" />
 	</target>
-	
-	<!-- check .gitmodules to use here -->
 	<target name="submodules-install">
 		<exec escape="false" checkreturn="true" passthru="true" command="git submodule init" />
 		<phingcall target="submodules-update" />
 	</target>
 	<target name="submodules-list">
-		<exec escape="false" checkreturn="true" passthru="true" command="cat ${project.basedir}/.gitmodules" />
+		<exec escape="false" checkreturn="true" passthru="true" command="cat .gitmodules" />
 	</target>
 	<target name="submodules-update">
 		<echo level="info" msg="updating git submodules" />
 		<exec escape="false" checkreturn="true" passthru="true" command="git submodule update" />
 	</target>
-	
-	<!-- install haml/compass -->
 	<target name="install-gems">
+		<fail unless="ruby.gems" message="no ruby gems defined in ruby.gems" />
 		<exec escape="false" checkreturn="true" passthru="true" command="gem update --system" />
-		<exec escape="false" checkreturn="true" passthru="true" command="gem install compass" />
+		<exec escape="false" checkreturn="true" passthru="true" command="gem install ${ruby.gems}" />
 	</target>
-	
-	<!-- Cleanup Tasks -->
 	<target name="install-cleanup">
 		<delete dir="tmp/install" includeemptydirs="true" verbose="true" failonerror="true" />
 	</target>

@@ -1,5 +1,7 @@
 <project>
 	<target name="version">
-		<version releasetype="Bugfix" file="${version.filename}" property="version.number" />
+		<property name="version.releasetype" value="Bugfix" />
+		<fail unless="version.filename" message="version.filename not set, unable to increase version"/>
+		<version releasetype="${version.releasetype}" file="${version.filename}" property="version.number" />
 	</target>
 </project>

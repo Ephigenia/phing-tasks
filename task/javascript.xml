@@ -1,11 +1,11 @@
 <project>
 	<filelist id="javascript-app-files" dir="${assets.root}/${assets.js.source_dir}" files="${assets.js.files}" />
 	<target name="javascript-compress" description="javascript packing/compiling">
-		<mkdir dir="${assets.root}/${assets.js.target_dir}" />
+		<mkdir dir="${assets.root}/${assets.js.target-dir}" />
 		<property name="assets.closure.compilation-level" value="SIMPLE_OPTIMIZATIONS" />
 		<property name="assets.closure.warning-level" value="QUIET" />
-		<property name="source" value="${assets.root}/${assets.js.target_dir}/app.tmp.js" />
-		<property name="target" value="${assets.root}/${assets.js.target_dir}/app.js" />
+		<property name="source" value="${assets.root}/${assets.js.target-dir}/app.tmp.js" />
+		<property name="target" value="${assets.root}/${assets.js.target-dir}/app.js" />
 		<delete file="${target}" />
 		<delete file="${source}" />
 		<append destFile="${source}">

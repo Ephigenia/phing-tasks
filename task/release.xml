@@ -1,7 +1,7 @@
 <project>
 	<target name="zip" description="create a zip file from the current release">
-		<mkdir dir="${release.targetdir}" />
-		<zip destfile="${release.targetdir}/${date}.zip">
+		<mkdir dir="${release.dir}" />
+		<zip destfile="${release.dir}/${date}.zip">
 			<fileset dir=".">
 				<include name="**/**" />
 				<exclude name="bin/**" />

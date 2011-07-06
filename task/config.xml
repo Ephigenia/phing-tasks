@@ -9,7 +9,7 @@
 		</if>
 		<echo msg="configuring application for '${environment}' environment" />
 		<copy todir="${project.basedir}" haltonerror="true" overwrite="true" preservelastmodified="true">
-			<fileset dir="${build.env_dir}/${environment}">
+			<fileset dir="${build.environment.dir}/${environment}">
 				<include name="**/*" />
 			</fileset>
 		</copy>
