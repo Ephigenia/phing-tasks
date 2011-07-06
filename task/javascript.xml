@@ -1,0 +1,23 @@
+<project>
+	<filelist id="javascript-app-files" dir="${assets.root}/${assets.js.source_dir}" files="${assets.js.files}" />
+	<target name="javascript-compress" description="javascript packing/compiling">
+		<mkdir dir="${assets.root}/${assets.js.target_dir}" />
+		<property name="assets.closure.compilation-level" value="SIMPLE_OPTIMIZATIONS" />
+		<property name="assets.closure.warning-level" value="QUIET" />
+		<property name="source" value="${assets.root}/${assets.js.target_dir}/app.tmp.js" />
+		<property name="target" value="${assets.root}/${assets.js.target_dir}/app.js" />
+		<delete file="${target}" />
+		<delete file="${source}" />
+		<append destFile="${source}">
+			<filelist refid="javascript-app-files" />
+		</append>
+		<exec checkreturn="true" passthru="true" command="java -jar ${assets.closure.compiler} --js ${source} --js_output_file ${target} --compilation_level ${assets.closure.compilation-level} --warning_level ${assets.closure.warning-level}" escape="false" />
+		<filesize propertyname="fileSizeUncompressed" file="${source}" />
+		<filesize propertyname="fileSizeCompressed" file="${target}" />
+		<php expression="round(${fileSizeCompressed}/${fileSizeUncompressed} * 100, 2)" returnProperty="compressionRatio" />
+		<php expression="round(${fileSizeUncompressed} / 1024, 3)" returnProperty="fileSizeUncompressed" />
+		<php expression="round(${fileSizeCompressed} / 1024, 3)" returnProperty="fileSizeCompressed" />
+		<echo msg="closure-compiler done (${fileSizeUncompressed}KB to ${fileSizeCompressed}KB, ratio: ${compressionRatio}%)" />
+		<delete file="${source}" />
+	</target>
+</project>

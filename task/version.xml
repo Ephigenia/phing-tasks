@@ -1,0 +1,5 @@
+<project>
+	<target name="version">
+		<version releasetype="Bugfix" file="${version.filename}" property="version.number" />
+	</target>
+</project>

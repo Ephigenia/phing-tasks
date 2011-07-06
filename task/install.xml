@@ -1,0 +1,48 @@
+<project>
+	<!-- main tasks -->
+	<target name="install" depends="submodules-install,install-closure-compiler,install-gems" description="install all libraries including bin and git submodules" />
+	<target name="update" depends="submodules-update,install-closure-compiler,install-gems" description="update all libraries including bin and git submodules" />
+	<!-- prepare stuff -->
+	<target name="install-prepare">
+		<mkdir dir="bin" />
+		<mkdir dir="tmp/install" />
+	</target>
+	
+	<!-- instal stuff -->
+	<target name="install-closure-compiler" depends="install-prepare">
+		<fail unless="assets.closure.compiler" message="assets.closure.compiler location not set in build.properties." />
+		<echo msg="downloading closure compiler from google code" />
+		<exec
+			escape="false"
+			passthru="true"
+			checkreturn="true"
+			command="wget http://closure-compiler.googlecode.com/files/compiler-latest.zip -O ${project.basedir}/tmp/install/compiler-latest.zip" />
+		<unzip file="tmp/install/compiler-latest.zip" todir="tmp/install/" />
+		<move file="tmp/install/compiler.jar" tofile="${assets.closure.compiler}" overwrite="true" />
+		<phingcall target="install-cleanup" />
+	</target>
+	
+	<!-- check .gitmodules to use here -->
+	<target name="submodules-install">
+		<exec escape="false" checkreturn="true" passthru="true" command="git submodule init" />
+		<phingcall target="submodules-update" />
+	</target>
+	<target name="submodules-list">
+		<exec escape="false" checkreturn="true" passthru="true" command="cat ${project.basedir}/.gitmodules" />
+	</target>
+	<target name="submodules-update">
+		<echo level="info" msg="updating git submodules" />
+		<exec escape="false" checkreturn="true" passthru="true" command="git submodule update" />
+	</target>
+	
+	<!-- install haml/compass -->
+	<target name="install-gems">
+		<exec escape="false" checkreturn="true" passthru="true" command="gem update --system" />
+		<exec escape="false" checkreturn="true" passthru="true" command="gem install compass" />
+	</target>
+	
+	<!-- Cleanup Tasks -->
+	<target name="install-cleanup">
+		<delete dir="tmp/install" includeemptydirs="true" verbose="true" failonerror="true" />
+	</target>
+</project>

@@ -1,0 +1,15 @@
+<project>
+	<target name="zip" description="create a zip file from the current release">
+		<mkdir dir="${release.targetdir}" />
+		<zip destfile="${release.targetdir}/${date}.zip">
+			<fileset dir=".">
+				<include name="**/**" />
+				<exclude name="bin/**" />
+				<exclude name="build/**" />
+				<exclude name="vendor/**" />
+				<exclude name="tmp/**" />
+				<exclude name=".git/**" />
+			</fileset>
+		</zip>
+	</target>
+</project>
