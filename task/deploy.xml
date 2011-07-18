@@ -31,7 +31,6 @@
 		<property name="sync.target" value="${deploy.${environment}.rsync.target}" />
 		<property name="sync.source" value="${deploy.${environment}.rsync.source}" />
 		<property name="sync.extra" value="${deploy.${environment}.rsync.extra}" />
-		<echo msg="${deploy.live.rsync.source} ${sync.source}" />
 		<!-- confirm when not in list mode -->
 		<if>
 			<not><contains string="${sync.options}" substring="n" /></not>
