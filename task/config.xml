@@ -8,7 +8,7 @@
 			</then>
 		</if>
 		<echo msg="configuring application for '${environment}' environment" />
-		<copy todir="${project.basedir}" haltonerror="true" overwrite="true" preservelastmodified="true">
+		<copy todir="${project.basedir}" haltonerror="false" overwrite="true" preservelastmodified="true">
 			<fileset dir="${build.environment.dir}/${environment}">
 				<include name="**/*" />
 			</fileset>
