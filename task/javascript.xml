@@ -3,10 +3,8 @@
 	<target name="javascript-compress" description="javascript packing/compiling">
 		<mkdir dir="${assets.root}/${assets.js.target-dir}" />
 		<!-- default values -->
-		<property name="assets.closure.compilation-level" value="SIMPLE_OPTIMIZATIONS" />
-		<property name="assets.closure.warning-level" value="QUIET" />
 		<property name="assets.js.target-filename" value="app.js" />
-		<property name="assets.closure.extra" value="" />
+		<property name="assets.yui.extra" value="" />
 		<!-- generated default values -->
 		<property name="source" value="${assets.root}/${assets.js.target-dir}/app.tmp.js" />
 		<property name="target" value="${assets.root}/${assets.js.target-dir}/${assets.js.target-filename}" />
@@ -15,7 +13,7 @@
 		<append destFile="${source}">
 			<filelist refid="javascript-app-files" />
 		</append>
-		<exec checkreturn="true" passthru="true" command="java -jar ${assets.closure.compiler} --js ${source} --js_output_file ${target} --compilation_level ${assets.closure.compilation-level} --warning_level ${assets.closure.warning-level} ${assets.closure.extra}" escape="false" />
+		<exec checkreturn="true" passthru="true" command="java -jar ${assets.yui.jar} --type js ${assets.yui.extra} ${source} -o ${target}" escape="false" />
 		<filesize propertyname="fileSizeUncompressed" file="${source}" />
 		<filesize propertyname="fileSizeCompressed" file="${target}" />
 		<php expression="round(${fileSizeCompressed}/${fileSizeUncompressed} * 100, 2)" returnProperty="compressionRatio" />

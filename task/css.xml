@@ -3,8 +3,6 @@
 	<target name="css-compress" description="javascript packing/compiling">
 		<mkdir dir="${assets.root}/${assets.css.target-dir}" />
 		<!-- default values -->
-		<property name="assets.closure.compilation-level" value="SIMPLE_OPTIMIZATIONS" />
-		<property name="assets.closure.warning-level" value="QUIET" />
 		<property name="assets.css.target-filename" value="app.css" />
 		<property name="assets.yui.extra" value="" />
 		<!-- generated default values -->
@@ -15,7 +13,7 @@
 		<append destFile="${source}">
 			<filelist refid="css-app-files" />
 		</append>
-		<exec checkreturn="true" passthru="true" command="java -jar ${assets.yui.jar} --type js ${assets.css.yui.extra} ${source} -o ${target}" escape="false" />
+		<exec checkreturn="true" passthru="true" command="java -jar ${assets.yui.jar} --type css ${assets.yui.extra} ${source} -o ${target}" escape="false" />
 		<filesize propertyname="fileSizeUncompressed" file="${source}" />
 		<filesize propertyname="fileSizeCompressed" file="${target}" />
 		<php expression="round(${fileSizeCompressed}/${fileSizeUncompressed} * 100, 2)" returnProperty="compressionRatio" />
