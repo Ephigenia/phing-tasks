@@ -6,7 +6,7 @@
 		<property name="assets.closure.compilation-level" value="SIMPLE_OPTIMIZATIONS" />
 		<property name="assets.closure.warning-level" value="QUIET" />
 		<property name="assets.css.target-filename" value="app.css" />
-		<proptery name="assets.yui.extra" value="" />
+		<property name="assets.yui.extra" value="" />
 		<!-- generated default values -->
 		<property name="source" value="${assets.root}/${assets.css.target-dir}/app.tmp.css" />
 		<property name="target" value="${assets.root}/${assets.css.target-dir}/${assets.css.target-filename}" />
