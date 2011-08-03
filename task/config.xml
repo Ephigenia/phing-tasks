@@ -7,11 +7,20 @@
 				<input propertyname="environment" validargs="${environments}">Enter environment name</input>
 			</then>
 		</if>
-		<echo msg="configuring application for '${environment}' environment" />
-		<copy todir="${project.basedir}" haltonerror="false" overwrite="true" preservelastmodified="true">
-			<fileset dir="${build.environment.dir}/${environment}">
-				<include name="**/*" />
-			</fileset>
-		</copy>
+		<available file="${build.environment.dir}/${environment}" type="dir" property="config.environment.exists" value="yes" />
+		<if>
+			<equals arg1="${config.environment.exists}" arg2="yes" />
+			<then>
+				<echo msg="configuring application for '${environment}' environment" />
+				<copy todir="${project.basedir}" haltonerror="false" overwrite="true" preservelastmodified="true">
+					<fileset dir="${build.environment.dir}/${environment}">
+						<include name="**/*" />
+					</fileset>
+				</copy>
+			</then>
+			<else>
+				<echo msg="environment '${environment}' not found. skipping" />
+			</else>
+		</if>
 	</target>	
 </project>
