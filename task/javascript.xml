@@ -6,7 +6,7 @@
 		<property name="assets.js.target-filename" value="app.js" />
 		<property name="assets.yui.extra" value="" />
 		<!-- generated default values -->
-		<property name="source" value="${assets.root}/${assets.js.target-dir}/app.tmp.js" />
+		<property name="source" value="${assets.root}/${assets.js.target-dir}/app.js.tmp" />
 		<property name="target" value="${assets.root}/${assets.js.target-dir}/${assets.js.target-filename}" />
 		<delete file="${target}" />
 		<delete file="${source}" />
