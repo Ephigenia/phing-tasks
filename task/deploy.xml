@@ -1,5 +1,5 @@
 <project>
-	<property name="sync.options" value="avzcu" />
+	<property name="sync.options" value="avzcuC" />
 	
 	<target name="deploy-list" description="list files that would be deployed">
 		<phingcall target="deploy">
@@ -42,7 +42,7 @@
 				<echo msg="To:     ${sync.target}" />
 			</then>
 		</if>
-		<property name="sync.command" value="rsync -${sync.options} --progress --cvs-exclude ${sync.extra} ${sync.source} -e ssh ${sync.target}" />
+		<property name="sync.command" value="rsync -${sync.options} --progress ${sync.extra} ${sync.source} -e ssh ${sync.target}" />
 		<exec
 			escape="false"
 			checkreturn="true"
