@@ -1,9 +1,9 @@
 <project>
-	<property name="sync.options" value="avzcuC" />
+	<property name="deploy.rsync.options" value="avzcuC" />
 	
 	<target name="deploy-list" description="list files that would be deployed">
 		<phingcall target="deploy">
-			<property name="sync.options" value="${sync.options}n" />
+			<property name="deploy.rsync.options" value="${deploy.rsync.options}n" />
 		</phingcall>
 	</target>
 	
@@ -27,13 +27,13 @@
 	</target>
 	
 	<target name="deploy-rsync">
-		<fail unless="sync.options" message="No rsync options defined" />
+		<fail unless="deploy.rsync.options" message="No rsync options defined" />
 		<property name="sync.target" value="${deploy.${environment}.rsync.target}" />
 		<property name="sync.source" value="${deploy.${environment}.rsync.source}" />
 		<property name="sync.extra" value="${deploy.${environment}.rsync.extra}" />
 		<!-- confirm when not in list mode -->
 		<if>
-			<not><contains string="${sync.options}" substring="n" /></not>
+			<not><contains string="${deploy.rsync.options}" substring="n" /></not>
 			<then>
 				<fail unless="sync.target" message="No rsync target specified" />
 				<echo msg="RSync Deploy" />
@@ -42,7 +42,7 @@
 				<echo msg="To:     ${sync.target}" />
 			</then>
 		</if>
-		<property name="sync.command" value="rsync -${sync.options} --progress ${sync.extra} ${sync.source} -e ssh ${sync.target}" />
+		<property name="sync.command" value="rsync -${deploy.rsync.options} --progress ${sync.extra} ${sync.source} -e ssh ${sync.target}" />
 		<exec
 			escape="false"
 			checkreturn="true"
