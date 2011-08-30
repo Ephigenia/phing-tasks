@@ -7,6 +7,15 @@
 	</tstamp>
 	<property name="build.task.dir" value="${project.basedir}/task" />
 	<property name="build.environment.dir" value="${project.basedir}/environment" />
+	<!-- optional fileset for ftp deployment
+	<fileset id="deploy.ftp.fileset" dir="${deploy.${environment}.ftp.source}">
+		<include name="**" />
+		<exclude name=".git\**" />
+		<exclude name=".git*" />
+		<exclude name="build/**" />
+		<exclude name="build*" />
+	</fileset>
+	-->
 	<!-- list of tasks included -->
 	<import file="${build.task.dir}/config.xml" optional="true" />
 	<import file="${build.task.dir}/deploy.xml" optional="true" />

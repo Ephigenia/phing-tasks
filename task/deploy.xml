@@ -15,14 +15,14 @@
 		<property name="ftp.pass" value="${deploy.${environment}.ftp.pass}" />
 		<echo msg="FTP Deploy" />
 		<echo msg="----------" />
-		<echo msg="From:    ${deploy.fileset.refid}" />
+		<echo msg="From:    ./" />
 		<echo msg="To:      ftp://${ftp.user}:****@${ftp.host}:${ftp.port}/${ftp.dir}" />
 		<ftpdeploy
 			host="${ftp.host}" port="${ftp.port}"
 			username="${ftp.user}" password="${ftp.pass}"
 			dir="${ftp.dir}"
 			level="verbose">
-			<fileset refid="${deploy.fileset.refid}" />
+			<fileset refid="deploy.ftp.fileset" />
 		</ftpdeploy>
 	</target>
 	
@@ -54,7 +54,7 @@
 	<target name="deploy" description="deploy everything to live server">
 		<property name="deploy.method" value="rsync" />
 		<property name="environment" value="${deploy.default-environment}" />
-		<fail unless="deploy.${environment}.${deploy.method}.target" msg="undefined deployment target environment, deploy.${environment}.${deploy.method}.target" />
+		<fail unless="deploy.${environment}.${deploy.method}.source" msg="undefined deployment target environment, deploy.${environment}.${deploy.method}.source" />
 		<phingcall target="config">
 			<property name="environment" value="${environment}" />
 		</phingcall>
