@@ -9,6 +9,7 @@ A collection of configurable [PHING](http://www.phing.info/trac/) (php based ANT
 * Environments with different configurations
 * Deploy to different targets via FTP or rsync
 * Install tasks that installs ruby gems and git submodules
+* optional additional tasks
 
 ## Environments
 

@@ -4,11 +4,15 @@
 		<zip destfile="${release.dir}/${date}.zip">
 			<fileset dir=".">
 				<include name="**/**" />
-				<exclude name="bin/**" />
-				<exclude name="build/**" />
-				<exclude name="vendor/**" />
-				<exclude name="tmp/**" />
-				<exclude name=".git/**" />
+				<exclude name="bin**" />
+				<exclude name="**git**" />
+				<exclude name="**.sass-cache**" />
+				<exclude name=".htaccess" />
+				<exclude name=".htpasswd" />
+				<exclude name="build/release**" />
+				<exclude name="tmp" />
+				<exclude name=".git**" />
+				<exclude name=".svn**" />
 			</fileset>
 		</zip>
 	</target>
