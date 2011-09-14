@@ -42,7 +42,7 @@
 				<echo msg="To:     ${sync.target}" />
 			</then>
 		</if>
-		<property name="sync.command" value="rsync -${deploy.rsync.options} --progress ${sync.extra} ${sync.source} -e ssh ${sync.target}" />
+		<property name="sync.command" value="rsync -${deploy.rsync.options} --progress ${sync.extra} ${deploy.rsync.extra} ${sync.source} -e ssh ${sync.target}" />
 		<exec
 			escape="false"
 			checkreturn="true"
