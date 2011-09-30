@@ -52,6 +52,7 @@
 	</target>
 	
 	<target name="deploy" description="deploy everything to live server">
+		<phingcall target="${deploy.depends}" />
 		<property name="deploy.method" value="rsync" />
 		<property name="environment" value="${deploy.default-environment}" />
 		<fail unless="deploy.${environment}.${deploy.method}.source" msg="undefined deployment target environment, deploy.${environment}.${deploy.method}.source" />
