@@ -52,7 +52,12 @@
 	</target>
 	
 	<target name="deploy" description="deploy everything to live server">
-		<phingcall target="${deploy.depends}" />
+		<if>
+			<isset property="deploy.depends" />
+			<then>
+				<phingcall target="${deploy.depends}"></phingcall>
+			</then>
+		</if>
 		<property name="deploy.method" value="rsync" />
 		<property name="environment" value="${deploy.default-environment}" />
 		<fail unless="deploy.${environment}.${deploy.method}.source" msg="undefined deployment target environment, deploy.${environment}.${deploy.method}.source" />
@@ -63,5 +68,11 @@
 		<phingcall target="config">
 			<property name="environment" value="local" override="true" />
 		</phingcall>
+		<if>
+			<isset property="deploy.appends" />
+			<then>
+				<phingcall target="${deploy.appends}" />
+			</then>
+		</if>
 	</target>
 </project>
