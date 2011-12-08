@@ -1,12 +1,6 @@
 <project>
 	<property name="deploy.rsync.options" value="avzcuC" />
 	
-	<target name="deploy-list" description="list files that would be deployed">
-		<phingcall target="deploy">
-			<property name="deploy.rsync.options" value="${deploy.rsync.options}n" />
-		</phingcall>
-	</target>
-	
 	<target name="deploy-ftp" hidden="true">
 		<property name="ftp.port" value="${deploy.${environment}.ftp.port}" />
 		<property name="ftp.dir" value="${deploy.${environment}.ftp.dir}" />
@@ -51,11 +45,17 @@
 		/>
 	</target>
 	
+	<target name="deploy-list" description="list files that would be deployed">
+		<phingcall target="deploy">
+			<property name="deploy.rsync.options" value="${deploy.rsync.options}n" />
+		</phingcall>
+	</target>
+	
 	<target name="deploy" description="deploy everything to live server">
 		<if>
 			<isset property="deploy.depends" />
 			<then>
-				<phingcall target="${deploy.depends}"></phingcall>
+				<phingcall target="${deploy.depends}" />
 			</then>
 		</if>
 		<property name="deploy.method" value="rsync" />
@@ -64,6 +64,7 @@
 		<phingcall target="config">
 			<property name="environment" value="${environment}" />
 		</phingcall>
+		<import file="${build.task.dir}/deploy.${deploy.method}.xml" />
 		<phingcall target="deploy-${deploy.method}" />
 		<phingcall target="config">
 			<property name="environment" value="local" override="true" />
