@@ -64,7 +64,6 @@
 		<phingcall target="config">
 			<property name="environment" value="${environment}" />
 		</phingcall>
-		<import file="${build.task.dir}/deploy.${deploy.method}.xml" />
 		<phingcall target="deploy-${deploy.method}" />
 		<phingcall target="config">
 			<property name="environment" value="local" override="true" />
