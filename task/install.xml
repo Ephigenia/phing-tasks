@@ -8,8 +8,9 @@
 		<mkdir dir="tmp/install" />
 	</target>
 	<target name="install-yui-compressor" depends="install-prepare" description="install YUI Compressor">
+		<echo msg="Installing YAHOO YUI Compressor" />
 		<fail unless="assets.yui.jar" message="assets.yui.jar location not set in build.properties." />
-		<echo msg="downloading yahoo yui compressor ..." />
+		<echo msg="downloading from yahoo ..." />
 		<exec
 			escape="false"
 			passthru="true"
