@@ -1,10 +1,10 @@
 <project>
-	<target name="git-update-revision-hash">
+	<target name="git-update-revision-hash" hidden="true">
 		<fail unless="git.revision-hash-filename" message="git.revision-hash-filename not set" />
 		<echo msg="Putting current git revision hash into git.revision" />
 		<exec escape="false" checkreturn="false" passthru="false" command="git rev-list HEAD | head -n 1 > ${git.revision-hash-filename}" />
 	</target>
-	<target name="git-tag-version" depends="version">
+	<target name="git-tag-version" depends="version" hidden="true">
 		<fail unless="version.number" message="no version number found to set" />
 		<echo msg="tagging release with v${version.number}" />
 		<exec escape="false" checkreturn="false" passthru="false" command="git tag v${version.number}" />

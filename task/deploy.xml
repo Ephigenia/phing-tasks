@@ -1,13 +1,7 @@
 <project>
 	<property name="deploy.rsync.options" value="avzcuC" />
 	
-	<target name="deploy-list" description="list files that would be deployed">
-		<phingcall target="deploy">
-			<property name="deploy.rsync.options" value="${deploy.rsync.options}n" />
-		</phingcall>
-	</target>
-	
-	<target name="deploy-ftp">
+	<target name="deploy-ftp" hidden="true">
 		<property name="ftp.port" value="${deploy.${environment}.ftp.port}" />
 		<property name="ftp.dir" value="${deploy.${environment}.ftp.dir}" />
 		<property name="ftp.host" value="${deploy.${environment}.ftp.host}" />
@@ -26,7 +20,7 @@
 		</ftpdeploy>
 	</target>
 	
-	<target name="deploy-rsync">
+	<target name="deploy-rsync" hidden="true">
 		<fail unless="deploy.rsync.options" message="No rsync options defined" />
 		<property name="sync.target" value="${deploy.${environment}.rsync.target}" />
 		<property name="sync.source" value="${deploy.${environment}.rsync.source}" />
@@ -42,7 +36,7 @@
 				<echo msg="To:     ${sync.target}" />
 			</then>
 		</if>
-		<property name="sync.command" value="rsync -${deploy.rsync.options} --progress ${sync.extra} ${sync.source} -e ssh ${sync.target}" />
+		<property name="sync.command" value="rsync -${deploy.rsync.options} --progress ${sync.extra} ${deploy.rsync.extra} ${sync.source} -e ssh ${sync.target}" />
 		<exec
 			escape="false"
 			checkreturn="true"
@@ -51,7 +45,19 @@
 		/>
 	</target>
 	
+	<target name="deploy-list" description="list files that would be deployed">
+		<phingcall target="deploy">
+			<property name="deploy.rsync.options" value="${deploy.rsync.options}n" />
+		</phingcall>
+	</target>
+	
 	<target name="deploy" description="deploy everything to live server">
+		<if>
+			<isset property="deploy.depends" />
+			<then>
+				<phingcall target="${deploy.depends}" />
+			</then>
+		</if>
 		<property name="deploy.method" value="rsync" />
 		<property name="environment" value="${deploy.default-environment}" />
 		<fail unless="deploy.${environment}.${deploy.method}.source" msg="undefined deployment target environment, deploy.${environment}.${deploy.method}.source" />
@@ -62,5 +68,11 @@
 		<phingcall target="config">
 			<property name="environment" value="local" override="true" />
 		</phingcall>
+		<if>
+			<isset property="deploy.appends" />
+			<then>
+				<phingcall target="${deploy.appends}" />
+			</then>
+		</if>
 	</target>
 </project>

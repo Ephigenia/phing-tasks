@@ -1,6 +1,14 @@
 <project>
 	<filelist id="javascript-app-files" dir="${assets.root}/${assets.js.soure-dir}" files="${assets.js.files}" />
 	<target name="javascript-compress" description="javascript packing/compiling">
+		<!-- install yui compressor if not present -->
+		<available file="${assets.yui.jar}" property="yui-compressor-found" value="yes" />
+		<if>
+			<not><equals arg1="${yui-compressor-found}" arg2="yes" /></not>
+			<then>
+				<phingcall target="install-yui-compressor" />
+			</then>
+		</if>
 		<mkdir dir="${assets.root}/${assets.js.target-dir}" />
 		<!-- default values -->
 		<property name="assets.js.target-filename" value="app.js" />

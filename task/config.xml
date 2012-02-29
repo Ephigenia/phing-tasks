@@ -1,4 +1,8 @@
 <project>
+	<target name="list-environments" description="list all available environments">
+		<echo msg="${environments}" />
+	</target>
+	
 	<target name="config" description="apply environment configuration on project">
 		<!-- ask for environment name if not specified -->
 		<if>
