@@ -15,7 +15,7 @@
 			escape="false"
 			passthru="true"
 			checkreturn="true"
-			command="wget http://yui.zenfs.com/releases/yuicompressor/yuicompressor-${assets.yui.version}.zip -O ${project.basedir}/tmp/install/yuicompressor-latest.zip" />
+			command="curl http://yui.zenfs.com/releases/yuicompressor/yuicompressor-${assets.yui.version}.zip -o '${project.basedir}/tmp/install/yuicompressor-latest.zip'" />
 		<unzip file="${project.basedir}/tmp/install/yuicompressor-latest.zip" todir="tmp/install/" />
 		<move file="${project.basedir}/tmp/install/yuicompressor-${assets.yui.version}/build/yuicompressor-${assets.yui.version}.jar" tofile="${assets.yui.jar}" overwrite="true" />
 		<phingcall target="install-cleanup" />
