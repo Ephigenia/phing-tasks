@@ -2,7 +2,9 @@
 	<filelist id="javascript-app-files" dir="${assets.root}/${assets.js.soure-dir}" files="${assets.js.files}" />
 	<target name="jslint" description="jslint-validate all application javascript files">
 		<jsllint haltonfailure="true" showwarnings="false">
-			<filelist refid="javascript-app-files" />
+			<fileset dir="${assets.root}/${assets.js.soure-dir}">
+				<include name="**/*.js"/>
+			</fileset>
 		</jsllint>
 	</target>
 	<target name="javascript-compress" description="javascript packing/compiling">
