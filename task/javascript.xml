@@ -30,7 +30,7 @@
 		<exec checkreturn="true" passthru="true" command="java -jar ${assets.yui.jar} --type js ${assets.yui.extra} ${source} -o ${target}" escape="false" />
 		<filesize propertyname="fileSizeUncompressed" file="${source}" />
 		<filesize propertyname="fileSizeCompressed" file="${target}" />
-		<php expression="round(${fileSizeCompressed}/${fileSizeUncompressed} * 100, 2)" returnProperty="compressionRatio" />
+		<php expression="100 - round(${fileSizeCompressed}/${fileSizeUncompressed} * 100, 2)" returnProperty="compressionRatio" />
 		<php expression="round(${fileSizeUncompressed} / 1024, 3)" returnProperty="fileSizeUncompressed" />
 		<php expression="round(${fileSizeCompressed} / 1024, 3)" returnProperty="fileSizeCompressed" />
 		<echo msg="closure-compiler done (${fileSizeUncompressed}KB to ${fileSizeCompressed}KB, ratio: ${compressionRatio}%)" />
