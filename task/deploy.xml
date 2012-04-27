@@ -23,9 +23,9 @@
 	<target name="deploy-rsync" hidden="true">
 		<fail unless="deploy.rsync.options" message="No rsync options defined" />
 		<property name="sync.target" value="${deploy.${environment}.rsync.target}" />
+		<property name="sync.host" value="${deploy.${environment}.rsync.host}" />
 		<property name="sync.source" value="${deploy.${environment}.rsync.source}" />
 		<property name="sync.extra" value="${deploy.${environment}.rsync.extra}" />
-		<!-- confirm when not in list mode -->
 		<if>
 			<not><contains string="${deploy.rsync.options}" substring="n" /></not>
 			<then>
@@ -33,16 +33,17 @@
 				<echo msg="RSync Deploy" />
 				<echo msg="------------" />
 				<echo msg="From:   ${sync.source}" />
-				<echo msg="To:     ${sync.target}" />
+				<echo msg="To:     ${sync.host}:${sync.target}" />
 			</then>
 		</if>
-		<property name="sync.command" value="rsync -${deploy.rsync.options} --progress ${sync.extra} ${deploy.rsync.extra} ${sync.source} -e ssh ${sync.target}" />
-		<exec
-			escape="false"
-			checkreturn="true"
-			passthru="true"
-			command="${sync.command}"
-		/>
+		<exec command="rsync -${deploy.rsync.options} --progress ${sync.extra} ${deploy.rsync.extra} ${sync.source} -e ssh ${sync.host}:${sync.target}" escape="false" checkreturn="true" passthru="true" />
+		<if>
+			<isset property="deploy.${environment}.rsync.chown" />
+			<then>
+				<echo msg="chown remote files to ${deploy.${environment}.rsync.chown}"></echo>
+				<exec command="ssh ${sync.host} chown -R ${deploy.${environment}.rsync.chown} ${sync.target}" escape="false" checkreturn="true" passthru="true" />
+			</then>
+		</if>
 	</target>
 	
 	<target name="deploy-list" description="list files that would be deployed">
