@@ -1,5 +1,4 @@
 <project>
-	<filelist id="javascript-app-files" dir="${assets.root}/${assets.js.soure-dir}" files="${assets.js.files}" />
 	<target name="jslint" description="jslint-validate all application javascript files">
 		<jsllint haltonfailure="true" showwarnings="false">
 			<fileset dir="${assets.root}/${assets.js.soure-dir}">
@@ -23,10 +22,21 @@
 		<property name="source" value="${assets.root}/${assets.js.target-dir}/app.js.tmp" />
 		<property name="target" value="${assets.root}/${assets.js.target-dir}/${assets.js.target-filename}" />
 		<delete file="${target}" />
-		<delete file="${source}" />
-		<append destFile="${source}">
-			<filelist refid="javascript-app-files" />
-		</append>
+		<delete file="${source}" />		
+		<!-- use file list from properties file instead of javascript-app-files fileset -->
+		<if>
+			<isset property="assets.js.files" />
+			<then>
+				<append destFile="${source}">
+					<filelist dir="${assets.root}/${assets.js.soure-dir}" files="${assets.js.files}" />
+				</append>
+			</then>
+			<else>
+				<append destFile="${source}">
+					<fileset refid="javascript-app-files" />
+				</append>
+			</else>
+		</if>
 		<exec checkreturn="true" passthru="true" command="java -jar ${assets.yui.jar} --type js ${assets.yui.extra} ${source} -o ${target}" escape="false" />
 		<filesize propertyname="fileSizeUncompressed" file="${source}" />
 		<filesize propertyname="fileSizeCompressed" file="${target}" />

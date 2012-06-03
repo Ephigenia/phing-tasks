@@ -16,6 +16,15 @@
 		<exclude name="build*" />
 	</fileset>
 	-->
+	
+	<!-- 
+	optional list of javascript application files for javascript-compress if you
+	not use assets.js.files
+	<fileset id="javascript-app-files" dir="${assets.root}/${assets.js.soure-dir}">
+		<include name="app.js" />
+	</fileset>
+	-->
+	
 	<!-- list of tasks included -->
 	<import file="${build.task.dir}/config.xml" optional="true" />
 	<import file="${build.task.dir}/deploy.xml" optional="true" />
