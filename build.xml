@@ -20,9 +20,10 @@
 	<!-- 
 	optional list of javascript application files for javascript-compress if you
 	not use assets.js.files
-	<fileset id="javascript-app-files" dir="${assets.root}/${assets.js.soure-dir}">
-		<include name="app.js" />
-	</fileset>
+	<filelist id="javascript-app-files" dir="${assets.root}/${assets.js.soure-dir}" files="
+		app.js,
+		app/model/model.js,
+	" />
 	-->
 	
 	<!-- list of tasks included -->
