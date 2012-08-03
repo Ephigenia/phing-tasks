@@ -30,11 +30,11 @@
 	<import file="${build.task.dir}/config.xml" optional="true" />
 	<import file="${build.task.dir}/deploy.xml" optional="true" />
 	<import file="${build.task.dir}/git.xml" optional="true" />
-	<import file="${build.task.dir}/install.xml" optional="true" />
 	<import file="${build.task.dir}/javascript.xml" optional="true" />
 	<import file="${build.task.dir}/css.xml" optional="true" />
 	<import file="${build.task.dir}/compass.xml" optional="true" />
 	<import file="${build.task.dir}/release.xml" optional="true" />
 	<import file="${build.task.dir}/version.xml" optional="true" />
-	<target name="cleanup" depends="install-cleanup" />
+	<target name="cleanup" />
+	<target name="default" />
 </project>

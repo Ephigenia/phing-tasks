@@ -9,4 +9,15 @@
 		<echo msg="tagging release with v${version.number}" />
 		<exec escape="false" checkreturn="false" passthru="false" command="git tag v${version.number}" />
 	</target>
+	<target name="submodules-install" description="install required git modules">
+		<exec escape="false" checkreturn="true" passthru="true" command="git submodule init" />
+		<phingcall target="submodules-update" />
+	</target>
+	<target name="submodules-list" description="list installed/required git modules">
+		<exec escape="false" checkreturn="true" passthru="true" command="cat .gitmodules" />
+	</target>
+	<target name="submodules-update" description="update all git modules">
+		<echo level="info" msg="updating git submodules" />
+		<exec escape="false" checkreturn="true" passthru="true" command="git submodule foreach git pull origin master" />
+	</target>
 </project>
