@@ -1,38 +1,22 @@
 <project>
 	<!-- main tasks -->
-	<target name="install" depends="config,install-yui-compressor,install-gems,install-cleanup" description="install all libraries including bin and git submodules" />
-	<target name="update" depends="submodules-update,install-yui-compressor,install-gems,install-cleanup" description="update all libraries including bin and git submodules" />
-	<property name="install.tmp.dir" value="${project.basedir}/tmp/install" />
-	<!-- sub tasks stuff -->
-	<target name="install-prepare" hidden="true">
-		<mkdir dir="bin" />
-		<mkdir dir="${install.tmp.dir}" />
-	</target>
-	<!-- install dependencies -->
-	<target name="install-yui-compressor" depends="install-prepare" description="install YUI Compressor">
-		<fail unless="assets.yui.jar" message="assets.yui.jar location not set in build.properties." />
-		<delete file="${assets.yui.jar}" failonerror="true" quiet="true" />
-		<echo msg="installing YAHOO yui compressor" />
-		<echo msg="getting ${assets.yui.version} zip package from yahoo server" />
-		<exec
-			escape="false"
-			passthru="true"
-			checkreturn="true"
-			command="curl --silent http://yui.zenfs.com/releases/yuicompressor/yuicompressor-${assets.yui.version}.zip -o '${install.tmp.dir}/yuicompressor-latest.zip'" />
-		<echo msg="unzipping zip file and placing yuicompressor at ${assets.yui.jar}" />
-		<unzip file="${install.tmp.dir}/yuicompressor-latest.zip" todir="tmp/install/" />
-		<move file="${install.tmp.dir}/yuicompressor-${assets.yui.version}/build/yuicompressor-${assets.yui.version}.jar" tofile="${assets.yui.jar}" overwrite="true" />
-		<echo msg="cleanup" />
-		<delete dir="${install.tmp.dir}/yuicompressor-${assets.yui.version}" includeemptydirs="true" failonerror="true" quiet="true" />
-	</target>
+	<target name="install" depends="config,install-gems" description="install all libraries including bin and git submodules" />
+	<target name="update" depends="submodules-update,install-gems" description="update all libraries including bin and git submodules" />
+
 	<target name="install-gems" description="install required gems">
-		<fail unless="ruby.gems" message="no ruby gems defined in ruby.gems" />
-		<echo msg="update ruby gem libraries" />
-		<echo msg="this will require root rights, please enter root password:" />
-		<exec escape="false" checkreturn="true" passthru="true" command="sudo gem update --system" />
-		<echo msg="install gems ${ruby.gems} (from build.properties)" />
-		<exec escape="false" checkreturn="true" passthru="true" command="sudo gem install ${ruby.gems}" />
+		<if>
+			<isset property="ruby.gems" />
+			<then>
+				<fail unless="ruby.gems" message="no ruby gems defined in ruby.gems" />
+				<echo msg="update ruby gem libraries" />
+				<echo msg="this will require root rights, please enter root password:" />
+				<exec escape="false" checkreturn="true" passthru="true" command="sudo gem update --system" />
+				<echo msg="install gems ${ruby.gems} (from build.properties)" />
+				<exec escape="false" checkreturn="true" passthru="true" command="sudo gem install ${ruby.gems}" />
+			</then>
+		</if>
 	</target>
+
 	<!-- git stuff -->
 	<target name="submodules-install" description="install required git modules">
 		<exec escape="false" checkreturn="true" passthru="true" command="git submodule init" />
@@ -44,9 +28,5 @@
 	<target name="submodules-update" description="update all git modules">
 		<echo level="info" msg="updating git submodules" />
 		<exec escape="false" checkreturn="true" passthru="true" command="git submodule foreach git pull origin master" />
-	</target>
-	<!-- cleanup -->
-	<target name="install-cleanup" hidden="true">
-		<delete dir="${install.tmp.dir}" includeemptydirs="true" verbose="true" failonerror="true" />
 	</target>
 </project>
