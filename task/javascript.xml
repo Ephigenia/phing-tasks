@@ -1,6 +1,6 @@
 <project>
 	<!-- install dependencies -->
-	<target name="install-yui-compressor" depends="install-prepare" description="install YUI Compressor">
+	<target name="install-yui-compressor" description="install YUI Compressor">
 		<property name="install.tmp.dir" value="${project.basedir}/tmp/install" />
 		<mkdir dir="bin" />
 		<mkdir dir="${install.tmp.dir}" />
