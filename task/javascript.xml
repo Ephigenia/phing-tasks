@@ -26,10 +26,10 @@
 			</fileset>
 		</jsllint>
 	</target>
-	<target name="javascript-compress" depends="install-yui-compressor" description="javascript packing/compiling">
+	<target name="javascript-compress" description="javascript packing/compiling">
 		<!-- install yui compressor if not present -->
 		<if>
-			<not><available file="./${assets.yui.jar}" /></not>
+			<not><available file="${assets.yui.jar}" /></not>
 			<then>
 				<phingcall target="install-yui-compressor" />
 			</then>
